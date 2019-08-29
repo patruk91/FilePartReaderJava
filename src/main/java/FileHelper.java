@@ -7,7 +7,7 @@ public class FileHelper {
         this.filePartReader = filePartReader;
     }
 
-    public String getAnReverseString(String word) {
+    public String getReverseString(String word) {
         return new StringBuilder(word.toLowerCase()).reverse().toString();
     }
 

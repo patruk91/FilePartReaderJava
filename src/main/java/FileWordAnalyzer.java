@@ -27,7 +27,7 @@ public class FileWordAnalyzer {
     public List<String> getStringsWhichPalindromes() throws IOException {
         String[] words = fileHelper.getWords();
         return Arrays.stream(words)
-                .filter(word -> word.toLowerCase().equals(fileHelper.getAnReverseString(word)))
+                .filter(word -> word.toLowerCase().equals(fileHelper.getReverseString(word)))
                 .collect(Collectors.toList());
     }
 
