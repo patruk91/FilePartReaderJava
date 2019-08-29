@@ -28,4 +28,20 @@ public class FilePartReader {
     public String read() throws IOException {
         return Files.readString(Paths.get(filePath));
     }
+
+    public String readLines() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        String content = read();
+        if (!content.isEmpty()) {
+            String newLineString = System.lineSeparator();
+            String[] lines = content.split(System.lineSeparator());
+            toLine = Math.min(toLine, lines.length);
+
+            int startLine = fromLine - 1;
+            for (int i = startLine; i < toLine; i++) {
+                sb.append(lines[i]).append(" ");
+            }
+        }
+        return sb.toString();
+    }
 }
