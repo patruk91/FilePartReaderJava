@@ -13,21 +13,21 @@ public class FileWordAnalyzer {
     }
 
     public List<String> getWordsOrderedAlphabetically() throws IOException {
-        String content = filePartReader.readLines();
-        List<String> words = Arrays.asList(content.split(" "));
-        Collections.sort(words);
-        return words;
+        String[] words = getWords();
+        return Arrays.stream(words)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public List<String> getWordsContainingSubstring(String substring) throws IOException {
-        String content = filePartReader.readLines();
-        String[] words = content.split(" ");
-        return Arrays.stream(words).filter(word -> word.equals(substring)).collect(Collectors.toList());
+        String[] words = getWords();
+        return Arrays.stream(words)
+                .filter(word -> word.equals(substring))
+                .collect(Collectors.toList());
     }
 
     public List<String> getStringsWhichPalindromes() throws IOException {
-        String content = filePartReader.readLines();
-        String[] words = content.split(" ");
+        String[] words = getWords();
         return Arrays.stream(words)
                 .filter(word -> word.toLowerCase().equals(getAnReverseString(word)))
                 .collect(Collectors.toList());
@@ -35,6 +35,11 @@ public class FileWordAnalyzer {
 
     private String getAnReverseString(String word) {
         return new StringBuilder(word.toLowerCase()).reverse().toString();
+    }
+
+    private String[] getWords() throws IOException {
+        String content = filePartReader.readLines();
+        return content.split(" ");
     }
 
 
