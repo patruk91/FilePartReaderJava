@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class FilePartReader {
     private String filePath;
     private int fromLine;
@@ -19,5 +23,9 @@ public class FilePartReader {
             this.fromLine = fromLine;
             this.toLine = toLine;
         }
+    }
+
+    public String read() throws IOException {
+        return Files.readString(Paths.get(filePath));
     }
 }
