@@ -20,7 +20,7 @@ public class FileWordAnalyzer {
     public List<String> getWordsContainingSubstring(String substring) throws IOException {
         String[] words = fileHelper.getWords();
         return Arrays.stream(words)
-                .filter(word -> word.equals(substring))
+                .filter(word -> word.contains(substring))
                 .collect(Collectors.toList());
     }
 
