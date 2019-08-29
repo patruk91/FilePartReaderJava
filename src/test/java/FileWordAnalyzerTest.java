@@ -108,5 +108,47 @@ class FileWordAnalyzerTest {
         }
     }
 
-    
+    @Test
+    void getWordsWhichArePalindromesFromString() {
+        List<String> expected = Arrays.asList("abba", "rotor", "kayak");
+        List<String> actual = new ArrayList<>();
+        try {
+            when(filePartReaderMock.readLines()).thenReturn("palindromes abba arguments class rotor kayak");
+            actual = fileWordAnalyzer.getStringsWhichPalindromes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getWordsWhichArePalindromesFromStringWithDifferentCases() {
+        List<String> expected = Arrays.asList("Abba", "rOtor", "kayaK");
+        List<String> actual = new ArrayList<>();
+        try {
+            when(filePartReaderMock.readLines()).thenReturn("PalinDromes Abba arguments class rOtor kayaK");
+            actual = fileWordAnalyzer.getStringsWhichPalindromes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void verifyIsReadLinesMethodIsInvokedWhenExecuteGetStringsWhichPalindromes() {
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
+        int fromLine = 1;
+        int toLine = 5;
+        FilePartReader filePartReaderSpy = spy(FilePartReader.class);
+        filePartReaderSpy.setup(filePath, fromLine, toLine);
+        FileWordAnalyzer fileWordAnalyzerSpy = new FileWordAnalyzer(filePartReaderSpy);
+
+        try {
+            fileWordAnalyzerSpy.getStringsWhichPalindromes();
+            verify(filePartReaderSpy).readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
