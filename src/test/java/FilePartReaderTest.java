@@ -47,7 +47,7 @@ class FilePartReaderTest {
         int fromLine = 1;
         int toLine = 4;
         filePartReader.setup(filePath, fromLine, toLine);
-        String actual = null;
+        String actual = "";
         try {
             actual = filePartReader.read();
         } catch (IOException e) {
@@ -55,4 +55,93 @@ class FilePartReaderTest {
         }
         assertEquals(expectedContent, actual);
     }
+
+    @Test
+    void getTwoLinesWhenReadFromFile() {
+        String expectedContent = "first line of text second line add remove edit";
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
+        int fromLine = 1;
+        int toLine = 2;
+        filePartReader.setup(filePath, fromLine, toLine);
+        String actual = "";
+        try {
+            actual = filePartReader.readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expectedContent, actual);
+    }
+
+    @Test
+    void getOneLineIfFromLineAndToLineAreEqualToOneWhenReadFromFile() {
+        String expectedContent = "first line of text";
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
+        int fromLine = 1;
+        int toLine = 1;
+        filePartReader.setup(filePath, fromLine, toLine);
+        String actual = "";
+        try {
+            actual = filePartReader.readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expectedContent, actual);
+    }
+
+    @Test
+    void getContentIfToLineHaveMoreLineThenFileWhenReadFromFile() {
+        String expectedContent =
+                "first line of text " +
+                "second line add remove edit " +
+                "third line some words extra " +
+                "fourth";
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
+        int fromLine = 1;
+        int toLine = 100;
+        filePartReader.setup(filePath, fromLine, toLine);
+        String actual = "";
+        try {
+            actual = filePartReader.readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expectedContent, actual);
+    }
+
+    @Test
+    void getContentIfFileIsEmptyWhenReadFromFile() {
+        String expectedContent = "";
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\emptyFile.txt";
+        int fromLine = 1;
+        int toLine = 5;
+        filePartReader.setup(filePath, fromLine, toLine);
+        String actual = "";
+        try {
+            actual = filePartReader.readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expectedContent, actual);
+    }
+
+    @Test
+    void invokeReadMethodBeforeReadLinesMethodIsExecuted() {
+        FilePartReader filePartReaderMock = spy(FilePartReader.class);
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\emptyFile.txt";
+        int fromLine = 1;
+        int toLine = 5;
+        filePartReaderMock.setup(filePath, fromLine, toLine);
+        try {
+            filePartReaderMock.readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            verify(filePartReaderMock).read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

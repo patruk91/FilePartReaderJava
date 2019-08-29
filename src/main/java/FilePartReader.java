@@ -40,9 +40,9 @@ public class FilePartReader {
 
             int startLine = fromLine - 1;
             for (int i = startLine; i < toLine; i++) {
-                sb.append(lines[i]).append(" ");
+                sb.append(lines[i].trim()).append(" ");
             }
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 }
