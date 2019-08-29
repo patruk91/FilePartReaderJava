@@ -25,5 +25,17 @@ public class FileWordAnalyzer {
         return Arrays.stream(words).filter(word -> word.equals(substring)).collect(Collectors.toList());
     }
 
-    
+    public List<String> getStringsWhichPalindromes() throws IOException {
+        String content = filePartReader.readLines();
+        String[] words = content.split(" ");
+        return Arrays.stream(words)
+                .filter(word -> word.toLowerCase().equals(getAnReverseString(word)))
+                .collect(Collectors.toList());
+    }
+
+    private String getAnReverseString(String word) {
+        return new StringBuilder(word.toLowerCase()).reverse().toString();
+    }
+
+
 }
