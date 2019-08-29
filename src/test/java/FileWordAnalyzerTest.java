@@ -1,8 +1,6 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,16 +20,13 @@ class FileWordAnalyzerTest {
 
     @Test
     void SortWordAlphabeticallyFromString() {
-
+        //should be split at arrange act?
+        //arrange
         List<String> expected = Arrays.asList("alpha", "beta", "gamma", "theta", "zeta");
-        try {
-            when(filePartReaderMock.readLines()).thenReturn("gamma zeta beta theta alpha");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        //act
         List<String> actual = new ArrayList<>();
         try {
+            when(filePartReaderMock.readLines()).thenReturn("gamma zeta beta theta alpha");
             actual = fileWordAnalyzer.getWordsOrderedAlphabetically();
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,16 +36,10 @@ class FileWordAnalyzerTest {
 
     @Test
     void IfIsEmptyListFromEmptyString() {
-
         List<String> expected = Collections.singletonList("");
-        try {
-            when(filePartReaderMock.readLines()).thenReturn("");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         List<String> actual = new ArrayList<>();
         try {
+            when(filePartReaderMock.readLines()).thenReturn("");
             actual = fileWordAnalyzer.getWordsOrderedAlphabetically();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,5 +63,4 @@ class FileWordAnalyzerTest {
             e.printStackTrace();
         }
     }
-
 }
