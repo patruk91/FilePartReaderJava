@@ -35,4 +35,24 @@ class FilePartReaderTest {
         int toLine = 4;
         assertThrows(IllegalArgumentException.class, () -> filePartReader.setup(filePath, fromLine, toLine));
     }
+
+    @Test
+    void getFileContentWhenReadFromFile() {
+        String expectedContent =
+                "first line of text\r\n" +
+                "second line add remove edit\r\n" +
+                "third line some words extra\r\n" +
+                "fourth";
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
+        int fromLine = 1;
+        int toLine = 4;
+        filePartReader.setup(filePath, fromLine, toLine);
+        String actual = null;
+        try {
+            actual = filePartReader.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expectedContent, actual);
+    }
 }
