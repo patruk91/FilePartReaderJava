@@ -28,14 +28,14 @@ public class FilePartReader {
     }
 
     public String read() throws IOException {
-        return Files.readString(Paths.get(filePath));
+        return Files.readString(Paths.get(filePath)).stripTrailing();
     }
 
     public String readLines() throws IOException {
         StringBuilder sb = new StringBuilder();
         String content = read();
         if (!content.isEmpty()) {
-            String[] lines = content.split(System.lineSeparator());
+            String[] lines = content.split("\\n");
             toLine = Math.min(toLine, lines.length);
 
             int startLine = fromLine - 1;
