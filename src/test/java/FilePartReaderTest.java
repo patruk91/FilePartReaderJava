@@ -133,11 +133,6 @@ class FilePartReaderTest {
         filePartReaderMock.setup(filePath, fromLine, toLine);
         try {
             filePartReaderMock.readLines();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             verify(filePartReaderMock).read();
         } catch (IOException e) {
             e.printStackTrace();
