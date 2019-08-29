@@ -13,11 +13,13 @@ public class FilePartReader {
         this.toLine = 0;
     }
 
-    private void setup(String filePath, int fromLine, int toLine) {
+    public void setup(String filePath, int fromLine, int toLine) {
         if (toLine < fromLine) {
-            throw new IllegalArgumentException("Invalid argument: fromLine is bigger than toLine");
+            throw new IllegalArgumentException(
+                    "Invalid argument: fromLine is bigger than toLine");
         } else if (fromLine < 1) {
-            throw new IllegalArgumentException("Invalid argument: fromLine is bigger than toLine");
+            throw new IllegalArgumentException(
+                    "Invalid argument: fromLine is less than one. Cannot read the file");
         } else {
             this.filePath = filePath;
             this.fromLine = fromLine;
@@ -33,7 +35,6 @@ public class FilePartReader {
         StringBuilder sb = new StringBuilder();
         String content = read();
         if (!content.isEmpty()) {
-            String newLineString = System.lineSeparator();
             String[] lines = content.split(System.lineSeparator());
             toLine = Math.min(toLine, lines.length);
 
