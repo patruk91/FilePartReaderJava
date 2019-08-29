@@ -48,7 +48,7 @@ class FileWordAnalyzerTest {
     }
 
     @Test
-    void verifyIsReadLinesMethodIsInvokedWhenExecute() {
+    void verifyIsReadLinesMethodIsInvokedWhenExecuteGetWordsOrderedAlphabetically() {
         String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
         int fromLine = 1;
         int toLine = 5;
@@ -63,4 +63,50 @@ class FileWordAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void getWordsContainingSubstringFromString() {
+        List<String> expected = Arrays.asList("zeta", "beta", "theta");
+        List<String> actual = new ArrayList<>();
+        try {
+            when(filePartReaderMock.readLines()).thenReturn("gamma zeta beta theta alpha");
+            actual = fileWordAnalyzer.getWordsContainingSubstring("eta");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getWordsContainingSubstringFromStringWithDifferentCases() {
+        List<String> expected = Arrays.asList("Zeta", "beta", "Theta");
+        List<String> actual = new ArrayList<>();
+        try {
+            when(filePartReaderMock.readLines()).thenReturn("gamma Zeta beta Theta alpha");
+            actual = fileWordAnalyzer.getWordsContainingSubstring("eta");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void verifyIsReadLinesMethodIsInvokedWhenExecuteGetWordsContainingSubstring() {
+        String filePath = "F:\\JAVA\\PROJECTS\\FilePartReaderJava\\src\\main\\resources\\test.txt";
+        int fromLine = 1;
+        int toLine = 5;
+        FilePartReader filePartReaderSpy = spy(FilePartReader.class);
+        filePartReaderSpy.setup(filePath, fromLine, toLine);
+        FileWordAnalyzer fileWordAnalyzerSpy = new FileWordAnalyzer(filePartReaderSpy);
+
+        try {
+            fileWordAnalyzerSpy.getWordsContainingSubstring("test");
+            verify(filePartReaderSpy).readLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
 }
